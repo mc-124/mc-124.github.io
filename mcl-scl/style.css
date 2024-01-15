@@ -1,71 +1,30 @@
 .navbar {
-    background-color:rgba(255,255,255,0.9);
+    background-color:#0071b3;
     padding:10px;
 }
 .navbar ul {
     list-style:none;
     padding:0;
-    display:flex; /* 横向排列菜单项 */
+    display:flex;
 }
-
 .navbar li {
-    margin-right:20px; /* 菜单项之间的间距 */
+    margin-right:20px;
 }
-
+.wtext {
+    color: #ffffff;
+}
 .navbar a {
-    text-decoration: none; /* 去掉链接下划线 */
+    text-decoration: none;
     opacity: 1;
-    color:#000000; /* 菜单项文本颜色 */
+    color:#000000;
 }
-.navbar img {
-    opacity:1;
-}
-@font-face {
-    font-family:'font';
-    src: url('assets/font.ttf') format('truetype');
-}
-a,p,h1,h2,h3,h4,h5,h6,button {
-    font-family: 'font',Arial,sans-serif;
-    color:#868686;
-}
-html, body {
-    height:100%;
-    margin:0;
-    padding:0;
-}
-body {
-	width:100%;
-	height:100%;
-	margin:0px;
-	padding:0px;
-	background:url("assets/background.webp") no-repeat fixed center #ffffff;
-	background-size:cover;
-	color:#000000
-} /* 来自www.bakaxl.com */
-.rootdiv {
-    background-color:rgba(255,255,255,0.9);
-    margin-top: 64px;
-    max-width: 960px;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-}
-.rootdiv_inside {
-    position: relative;
-    left: 47%;
-    transform: translateX(-50%);
-    margin: 24px;
-    overflow: hidden;
-}
-.midimg {
-    max-width: 90%; /* 图片最大宽度为容器宽度 */
-    height: auto; /* 高度自适应 */
+.g {
+    color: #868686
 }
 .container {
     overflow: hidden;
 }
 .div-left {
-    
     float: left;
 }  
 .div-right {
@@ -73,7 +32,7 @@ body {
 }
 .cont {
     text-align: center;
-  }
-.cent-text {
-    display: inline-block;
-  }
+}
+.rootdiv {
+    margin: 32px;
+}
