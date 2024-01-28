@@ -1,15 +1,160 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>牢大网站</title>
+    <title>In Memory of Kobe Bryant</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-image: url("https://wallpaperm.cmcm.com/9e7782a7d74a58ef4bb14b51d1b65c77.jpg");
+        }
+
+        #background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        @keyframes rotateImg {
+            0% {transform : rotate(0deg);}
+            100% {transform : rotate(360deg);}
+          }
+          
+          @-webkit-keyframes rotateImg {
+              0%{-webkit-transform : rotate(0deg);}
+            100%{-webkit-transform : rotate(360deg);}
+          }
+        #center-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #c300ff;
+            text-align: center;
+        }
+
+        #kobe-image {
+            width: 300px; 
+            height: 300px; 
+            border-radius: 50%;
+            border: 10px solid #bcc725; 
+            cursor: pointer;
+        
+            animation: rotateImg 3s linear infinite; 
+        
+            -webkit-animation: rotateImg 3s linear infinite;
+        }
+
+        #info-container {
+            margin-top: 20px;
+            border: 2px solid #333;
+            padding: 10px;
+            font-size: 18px;
+        }
+
+        #lang-toggle {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            cursor: pointer;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-    <h1>牢大！！！</h1>
-    <audio controls>
-        <source src="Kobe.mp3" type="audio/mp3">
+    <audio id="audio" loop>
+        <source src="https://xiaojiangxj233.github.io/kobe/Kobe.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
+
+    <div id="background"></div>
+
+    <button id="lang-toggle" onclick="toggleLanguage()">English / 中文</button>
+
+    <div id="center-container">
+        <img id="kobe-image" src="https://xiaojiangxj233.github.io/kobe/KOBE.jpg" alt="Kobe Bryant" onclick="toggleMusic()">
+        <div id="info-container">
+            <p id="info-text"></p>
+            <p id="time"></p>
+        </div>
+    </div>
+
+    <script>
+        var audio = document.getElementById('audio');
+        var kobeImage = document.getElementById('kobe-image');
+        var isPlaying = false;
+
+        function updateTime() {
+            var now = new Date();
+            var kobePassingTime = new Date(2020, 0, 26, 10, 0, 0); // January is 0 in JavaScript
+
+            var timeDiff = now - kobePassingTime;
+            var years = Math.floor(timeDiff / (365.25 * 24 * 60 * 60 * 1000));
+            var months = Math.floor((timeDiff % (365.25 * 24 * 60 * 60 * 1000)) / (30.44 * 24 * 60 * 60 * 1000));
+            var days = Math.floor((timeDiff % (30.44 * 24 * 60 * 60 * 1000)) / (24 * 60 * 60 * 1000));
+            var hours = Math.floor((timeDiff % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+            var minutes = Math.floor((timeDiff % (60 * 60 * 1000)) / (60 * 1000));
+            var seconds = Math.floor((timeDiff % (60 * 1000)) / 1000);
+
+            var timeElement = document.getElementById('time');
+            if (lang == "zh") {
+                timeElement.innerHTML = "科比已经去世" + years + "年" + months + "月" + days + "天" + hours + "小时" + minutes + "分钟" + seconds + "秒";
+            } else {
+                timeElement.innerHTML = "Kobe has passed away for " + years + " Years " + months + " Months " + days + " Days " + hours + " Hours " + minutes + " Minutes " + seconds + " Seconds ";
+            }
+            
+        }
+        var lang = "en";
+        function toggleLanguage() {
+            var infoText = document.getElementById('info-text');
+            var langToggle = document.getElementById('lang-toggle');
+
+            if (infoText.innerHTML === "牢达我想你了") {
+                document.title = "In Memory of Kobe Bryant"
+                infoText.innerHTML = "I miss you,Kobe.";
+                lang = "en";
+                langToggle.innerHTML = "English / 中文";
+            } else {
+                document.title = "纪念科比"
+                infoText.innerHTML = "牢达我想你了";
+                lang = "zh";
+                langToggle.innerHTML = "中文 / English";
+            }
+        }
+
+        function toggleMusic() {
+            if (isPlaying) {
+                audio.pause();
+                kobeImage.classList.remove('rotate'); // Remove rotation class
+            } else {
+                audio.play();
+                kobeImage.classList.add('rotate'); // Add rotation class
+            }
+            isPlaying = !isPlaying;
+        }
+
+        function setInitialLanguage() {
+            var userLanguage = navigator.language || navigator.userLanguage;
+
+            if (userLanguage.startsWith('zh')) {
+                toggleLanguage(); // Switch to Chinese if user's language is Chinese
+                lang == "zh";
+                document.title = "纪念科比"
+            }
+        }
+
+        setInterval(updateTime, 1000);
+        document.addEventListener("DOMContentLoaded", setInitialLanguage);
+    </script>
 </body>
 </html>
+<!-- from: https://xiaojiangxj233.github.io/kobe -->
