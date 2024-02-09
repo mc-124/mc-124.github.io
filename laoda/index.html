@@ -1,4 +1,4 @@
-<!-- version: 2.1.1-->
+<!-- version: 2.1.2-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -174,25 +174,31 @@
             }
         }
 
+        var timer = null;
         function toggleMusic() {
-            if (isPlaying) {
+            if (isPlaying) { //pause
                 audio.pause();
+                if (timer) {
+                    clearTimeout(timer);
+                }
                 kobeImage.classList.remove('rotate');
+                try {
+                    kobeImage.classList.remove('rotateStart');
+                } catch {/*pass*/};
             } else {
                 audio.play();
                 kobeImage.classList.add('rotateStart')
-                setTimeout(function() {
+                timer = setTimeout(function() {
                     if (isPlaying) {
                         kobeImage.classList.remove('rotateStart');
                         kobeImage.classList.add('rotate');
                     } else {
-                        console.debug('noplay');
                         kobeImage.classList.remove('rotateStart');
                     };
+                    timer = null;
                 }, 1000)
             }
             isPlaying = !isPlaying;
-            console.debug("playing: ",isPlaying);
         }
 
         function setInitialLanguage() {
