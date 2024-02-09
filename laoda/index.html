@@ -1,3 +1,4 @@
+<!-- version: 2.1.1-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,41 +24,41 @@
         }
 
         @keyframes rotateImg {
-            0% {transform : rotate(0deg);}
-            100% {transform : rotate(360deg);}
+            0% {transform: rotate(0deg);}
+            100% {transform: rotate(360deg);}
         }
-          
+
         @-webkit-keyframes rotateImg {
-            0%{-webkit-transform : rotate(0deg);}
-            100%{-webkit-transform : rotate(360deg);}
+            0%{-webkit-transform: rotate(0deg);}
+            100%{-webkit-transform: rotate(360deg);}
         }
 
         @keyframes rotateImgStart {
-            0% {transform : rotate(0deg);}
-            10% {transform : rotate(2deg);}
-            20% {transform : rotate(8deg);}
-            30% {transform : rotate(12deg);}
-            40% {transform : rotate(24deg);}
-            50% {transform : rotate(48deg);}
-            60% {transform : rotate(80deg);}
-            70% {transform : rotate(120deg);}
-            80% {transform : rotate(150deg);}
-            90% {transform : rotate(180deg);}
-            100% {transform : rotate(360deg);}
+            0%   {transform: rotate(0deg);}
+            10%  {transform: rotate(2deg);}
+            20%  {transform: rotate(8deg);}
+            30%  {transform: rotate(12deg);}
+            40%  {transform: rotate(24deg);}
+            50%  {transform: rotate(48deg);}
+            60%  {transform: rotate(80deg);}
+            70%  {transform: rotate(120deg);}
+            80%  {transform: rotate(150deg);}
+            90%  {transform: rotate(180deg);}
+            100% {transform: rotate(360deg);}
         }
-          
+
         @-webkit-keyframes rotateImgStart {
-            0%{-webkit-transform : rotate(0deg);}
-            10% {-webkit-transform : rotate(8deg);}
-            20% {-webkit-transform : rotate(12deg);}
-            30% {-webkit-transform : rotate(24deg);}
-            40% {-webkit-transform : rotate(36deg);}
-            50% {-webkit-transform : rotate(48deg);}
-            60% {-webkit-transform : rotate(72deg);}
-            70% {-webkit-transform : rotate(108deg);}
-            80% {-webkit-transform : rotate(144deg);}
-            90% {-webkit-transform : rotate(180deg);}
-            100% {-webkit-transform : rotate(360deg);}
+            0%   {-webkit-transform: rotate(0deg);}
+            10%  {-webkit-transform: rotate(2deg);}
+            20%  {-webkit-transform: rotate(8deg);}
+            30%  {-webkit-transform: rotate(12deg);}
+            40%  {-webkit-transform: rotate(24deg);}
+            50%  {-webkit-transform: rotate(48deg);}
+            60%  {-webkit-transform: rotate(80deg);}
+            70%  {-webkit-transform: rotate(120deg);}
+            80%  {-webkit-transform: rotate(150deg);}
+            90%  {-webkit-transform: rotate(180deg);}
+            100% {-webkit-transform: rotate(360deg);}
         }
 
         #center-container {
@@ -68,14 +69,12 @@
             background-color: #c300ff;
             text-align: center;
         }
-
         #kobe-image {
             width: 300px; 
             height: 300px; 
             border-radius: 50%;
             border: 10px solid #bcc725; 
             cursor: pointer;
-        
         }
 
         .rotateStart {
@@ -137,7 +136,7 @@
 
         function updateTime() {
             var now = new Date();
-            var kobePassingTime = new Date("2020-01-26T02:00:00+00:00");
+            var kobePassingTime = new Date("2020-01-26T02:00:00+00:00"); //time fix
 
             var timeDiff = now - kobePassingTime;
             var years = Math.floor(timeDiff / (365.25 * 24 * 60 * 60 * 1000));
@@ -183,8 +182,13 @@
                 audio.play();
                 kobeImage.classList.add('rotateStart')
                 setTimeout(function() {
-                    kobeImage.classList.remove('rotateStart')
-                    kobeImage.classList.add('rotate');
+                    if (isPlaying) {
+                        kobeImage.classList.remove('rotateStart');
+                        kobeImage.classList.add('rotate');
+                    } else {
+                        console.debug('noplay');
+                        kobeImage.classList.remove('rotateStart');
+                    };
                 }, 1000)
             }
             isPlaying = !isPlaying;
@@ -200,7 +204,6 @@
                 document.title = "纪念科比"
             }
         }
-
         setInterval(updateTime, 100);
         document.addEventListener("DOMContentLoaded", setInitialLanguage);
     </script>
