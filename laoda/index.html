@@ -20,15 +20,45 @@
             height: 100%;
             z-index: -1;
         }
+
         @keyframes rotateImg {
             0% {transform : rotate(0deg);}
             100% {transform : rotate(360deg);}
-          }
+        }
           
-          @-webkit-keyframes rotateImg {
-              0%{-webkit-transform : rotate(0deg);}
+        @-webkit-keyframes rotateImg {
+            0%{-webkit-transform : rotate(0deg);}
             100%{-webkit-transform : rotate(360deg);}
-          }
+        }
+
+        @keyframes rotateImgStart {
+            0% {transform : rotate(0deg);}
+            10% {transform : rotate(2deg);}
+            20% {transform : rotate(8deg);}
+            30% {transform : rotate(12deg);}
+            40% {transform : rotate(24deg);}
+            50% {transform : rotate(48deg);}
+            60% {transform : rotate(80deg);}
+            70% {transform : rotate(120deg);}
+            80% {transform : rotate(150deg);}
+            90% {transform : rotate(180deg);}
+            100% {transform : rotate(360deg);}
+        }
+          
+        @-webkit-keyframes rotateImgStart {
+            0%{-webkit-transform : rotate(0deg);}
+            10% {-webkit-transform : rotate(8deg);}
+            20% {-webkit-transform : rotate(12deg);}
+            30% {-webkit-transform : rotate(24deg);}
+            40% {-webkit-transform : rotate(36deg);}
+            50% {-webkit-transform : rotate(48deg);}
+            60% {-webkit-transform : rotate(72deg);}
+            70% {-webkit-transform : rotate(108deg);}
+            80% {-webkit-transform : rotate(144deg);}
+            90% {-webkit-transform : rotate(180deg);}
+            100% {-webkit-transform : rotate(360deg);}
+        }
+
         #center-container {
             position: absolute;
             top: 50%;
@@ -45,9 +75,18 @@
             border: 10px solid #bcc725; 
             cursor: pointer;
         
-            animation: rotateImg 3s linear infinite; 
+        }
+
+        .rotateStart {
+            animation: rotateImgStart 1000ms linear;
+
+            -webkit-animation: rotateImgStart 1000ms linear;
+        }
+
+        .rotate {
+            animation: rotateImg 80ms linear infinite; 
         
-            -webkit-animation: rotateImg 3s linear infinite;
+            -webkit-animation: rotateImg 80ms linear infinite;
         }
 
         #info-container {
@@ -137,9 +176,14 @@
                 kobeImage.classList.remove('rotate');
             } else {
                 audio.play();
-                kobeImage.classList.add('rotate');
+                kobeImage.classList.add('rotateStart')
+                setTimeout(function() {
+                    kobeImage.classList.remove('rotateStart')
+                    kobeImage.classList.add('rotate');
+                }, 1000)
             }
             isPlaying = !isPlaying;
+            console.debug("playing: ",isPlaying);
         }
 
         function setInitialLanguage() {
@@ -152,7 +196,7 @@
             }
         }
 
-        setInterval(updateTime, 1000);
+        setInterval(updateTime, 100);
         document.addEventListener("DOMContentLoaded", setInitialLanguage);
     </script>
 </body>
