@@ -19,12 +19,17 @@
                     }
                     started = true
                     video.play().catch(_ => {
+                        console.error(_)
                         playError();
                     });
                     if (!e) {
                         audio.play().catch(_ => {
+                            console.error(_)
                             playError();
                         });
+                    }
+                    if (e){
+                        started = false
                     }
             
                 } else {
