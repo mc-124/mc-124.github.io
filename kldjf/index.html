@@ -6,38 +6,60 @@
         var video;
         var audio;
         var started = false;
-
-        window.onload = function() {
-            video = document.getElementById('video');
-            audio = document.getElementById('music');
-
-            document.body.onclick = function() {
-                start()
-            }
-        }
-
-        function playLoopVideo() {
-            video.loop = true;
-            video.play();
-        }
-
-        function playLoopMusic() {
-            audio.loop = true;
-            audio.play();
-        }
+        var loadok = false;
 
         function start() {
-            if (!started) {
-                playLoopMusic();
-                playLoopVideo();
-                started = true
+            if (loadok){
+                if (!started) {
+                    var e = false;
+                    function playError() {
+                        started = false;
+                        e = true;
+                        console.warn("未启用自动播放，播放音频或视频时出现错误");
+                    }
+                    started = true
+                    video.play().catch(_ => {
+                        playError();
+                    });
+                    if (!e) {
+                        audio.play().catch(_ => {
+                            playError();
+                        });
+                    }
+            
+                } else {
+                    console.log("无效的触发。原因：已经在播放")
+                }
+            } else {
+                console.log("无效的触发。原因：未加载完成")
             }
         }
-        try {
+        
+        function onLoadOk() {
+            loadok = true;
+            console.log('加载完成');
             start()
-        } catch (error) {
-            
         }
+
+        function main(){
+            console.log("main启动")
+            window.onload = function() {
+                video = document.getElementById('video');
+                audio = document.getElementById('music');
+            
+                video.loop = true;
+                audio.loop = true;
+
+                document.body.onclick = function() {
+                    start()
+                }
+            }
+            start()
+            window.addEventListener('load', (event) => {
+                onLoadOk()
+            });
+        }
+        main()
     </script>
     <style>
         #video{
