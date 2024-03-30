@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>全新骷髅打金服，高攻高爆！爆装不停！</title>
+    <script>
+        var video;
+        var audio;
+        var started = false;
+
+        window.onload = function() {
+            video = document.getElementById('video');
+            audio = document.getElementById('music');
+
+            document.body.onclick = function() {
+                start()
+            }
+        }
+
+        function playLoopVideo() {
+            video.loop = true;
+            video.play();
+        }
+
+        function playLoopMusic() {
+            audio.loop = true;
+            audio.play();
+        }
+
+        function start() {
+            if (!started) {
+                playLoopMusic();
+                playLoopVideo();
+                started = true
+            }
+        }
+        try {
+            start()
+        } catch (error) {
+            document.error(error)
+        }
+    </script>
+    <style>
+        #video{
+            max-width: 100%;
+            max-height: 100vh;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+    <video id="video" maintainAspectRatio>
+        <source src="assets/bg.mp4" type="video/mp4">
+    </video>
+    <audio id="music">
+        <source src="assets/bg.mp3" type="audio/mpeg">
+    </audio>
+</body>
+
+</html>
