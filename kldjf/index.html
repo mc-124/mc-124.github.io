@@ -3,15 +3,17 @@
 <head>
     <title>全新骷髅打金服，高攻高爆！爆装不停！</title>
     <script>
+        var version = "0.2.0";
         var video;
         var audio;
         var started = false;
         var loadok = false;
+        var e = false;
 
         function start() {
             if (loadok){
                 if (!started) {
-                    var e = false;
+                    e = false;
                     function playError() {
                         started = false;
                         e = true;
@@ -29,7 +31,7 @@
                         });
                     }
                     if (e){
-                        started = false
+                        started = false;
                     }
             
                 } else {
@@ -37,6 +39,7 @@
                 }
             } else {
                 console.log("无效的触发。原因：未加载完成")
+                started = false
             }
         }
         
@@ -54,14 +57,12 @@
             
                 video.loop = true;
                 audio.loop = true;
-
+            }
+            window.addEventListener('load', (event) => {
+                onLoadOk()
                 document.body.onclick = function() {
                     start()
                 }
-            }
-            start()
-            window.addEventListener('load', (event) => {
-                onLoadOk()
             });
         }
         main()
