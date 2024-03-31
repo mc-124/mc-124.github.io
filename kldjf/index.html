@@ -1,32 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!--
+        mc-124的广告整蛊网页
+    -->
     <title>全新骷髅打金服，高攻高爆！爆装不停！</title>
     <script>
-        var version = "0.2.0";
+        var version = "0.3.0";
         var video;
         var audio;
         var started = false;
         var loadok = false;
+        var vok = false;
         var e = false;
+        var loadOkText;
 
         function start() {
-            if (loadok){
+            if (loadok&&vok){ // 完全加载完成
                 if (!started) {
-                    e = false;
+                    e = false; // 发生了错误
                     function playError() {
                         started = false;
                         e = true;
-                        console.warn("未启用自动播放，播放音频或视频时出现错误");
+                        console.warn("可能未启用自动播放，播放音频或视频时出现错误");
                     }
                     started = true
                     video.play().catch(_ => {
-                        console.error(_)
+                        console.error("视频播放器错误：",_)
                         playError();
                     });
                     if (!e) {
                         audio.play().catch(_ => {
-                            console.error(_)
+                            console.error("音频播放器错误：",_)
                             playError();
                         });
                     }
@@ -42,30 +47,44 @@
                 started = false
             }
         }
-        
-        function onLoadOk() {
-            loadok = true;
-            console.log('加载完成');
-            start()
-        }
 
         function main(){
-            console.log("main启动")
+            console.log("main启动 版本",version)
             window.onload = function() {
+                console.log("开始加载资源");
+
+                // 绑定
                 video = document.getElementById('video');
                 audio = document.getElementById('music');
-            
+                loadOkText = document.getElementById('loadOkText');
+                
+                // 检测资源加载
+                video.oncanplaythrough = function(){
+                    vok = true;
+                    console.log("视频加载完成");
+                };
+                // 音频过小，无法检测到
+
                 video.loop = true;
                 audio.loop = true;
-            }
-            window.addEventListener('load', (event) => {
-                onLoadOk()
+
+                loadok = true;
+                console.log('HTML加载完成');
                 document.body.onclick = function() {
-                    start()
+                    start();
                 }
-            });
+
+                let checkInterval = setInterval(function(){ // 循环检查加载进度
+                    if(vok) {
+                        console.log("所有资源加载完成");
+                        loadOkText.style.display = "none" // 隐藏加载中文本
+                        start(); // 尝试自动播放
+                        clearInterval(checkInterval);
+                    }
+                }, 100);
+            }
         }
-        main()
+        main();
     </script>
     <style>
         #video{
@@ -83,6 +102,7 @@
         <source src="assets/bg.mp3" type="audio/mpeg">
     </audio>
     <button></button>
+    <p id="loadOkText">资源加载中...</p>
 </body>
 
 </html>
