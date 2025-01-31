@@ -1,0 +1,689 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "description": "MihuyouLauncher 配置文件格式 \"games.json\" 版本：0.1.0-zh",
+    "properties": {
+        "games": {
+            "description": "游戏配置信息列表",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "description": "游戏配置信息",
+                "properties": {
+                    "type": {
+                        "description": "游戏类型",
+                        "oneOf": [
+                            {
+                                "const": "StarRail",
+                                "description": "崩坏：星穹铁道"
+                            },
+                            {
+                                "const": "Honkai3",
+                                "description": "崩坏 3"
+                            },
+                            {
+                                "const": "Genshin",
+                                "description": "原神"
+                            },
+                            {
+                                "const": "ZzZone",
+                                "description": "绝·区·零"
+                            }
+                        ],
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string",
+                        "description": "游戏路径"
+                    },
+                    "language": {
+                        "type": "string",
+                        "description": "游戏语言选择",
+                        "enum": [
+                            "Chinese",
+                            "English",
+                            "Japanese",
+                            "Korean"
+                        ]
+                    },
+                    "is_autosearch": {
+                        "type": "boolean",
+                        "description": "用于判断是否是由启动器自行寻找的游戏",
+                        "enum": [
+                            true,
+                            false
+                        ]
+                    },
+                    "append_time": {
+                        "type": "string",
+                        "description": "游戏被添加的时间",
+                        "format": "date-time"
+                    },
+                    "last_play": {
+                        "type": "string",
+                        "description": "上次玩的时间",
+                        "format": "date-time"
+                    },
+                    "playtime": {
+                        "type": "integer",
+                        "description": "已经玩了多久（单位：秒）",
+                        "minimum": 0
+                    },
+                    "graphics_config": {
+                        "type": "object",
+                        "description": "游戏显示设置",
+                        "properties": {
+                            "default_config": {
+                                "type": "string",
+                                "description": "显示预设（当值为 \"custom\" 时，本地显示设置生效）",
+                                "oneOf": [
+                                    {
+                                        "const": "custom",
+                                        "description": "自定义"
+                                    },
+                                    {
+                                        "const": "verylow",
+                                        "description": "非常低"
+                                    },
+                                    {
+                                        "const": "low",
+                                        "description": "低"
+                                    },
+                                    {
+                                        "const": "middle",
+                                        "description": "中"
+                                    },
+                                    {
+                                        "const": "high",
+                                        "description": "高"
+                                    },
+                                    {
+                                        "const": "veryhigh",
+                                        "description": "非常高"
+                                    }
+                                ]
+                            },
+                            "platform": {
+                                "type": "string",
+                                "description": "平台设置",
+                                "oneOf": [
+                                    {
+                                        "const": "pc",
+                                        "description": "PC 端模式，不支持触摸屏"
+                                    },
+                                    {
+                                        "const": "mobile",
+                                        "description": "移动端模式，支持触摸屏"
+                                    },
+                                    {
+                                        "const": "webtouch",
+                                        "description": "网页端触摸模式，支持触摸屏"
+                                    }
+                                ]
+                            },
+                            "fps": {
+                                "type": "string",
+                                "enum": [
+                                    "30",
+                                    "60",
+                                    "120"
+                                ]
+                            },
+                            "anti_aliasing": {
+                                "type": "string",
+                                "description": "抗锯齿",
+                                "oneOf": [
+                                    {
+                                        "const": "taa",
+                                        "description": "TAA 抗锯齿"
+                                    },
+                                    {
+                                        "const": "fxaa",
+                                        "description": "FXAA 抗锯齿"
+                                    },
+                                    {
+                                        "const": "disabled",
+                                        "description": "关闭抗锯齿"
+                                    }
+                                ]
+                            },
+                            "character_quality": {
+                                "type": "string",
+                                "description": "角色质量",
+                                "oneOf": [
+                                    {
+                                        "const": "low",
+                                        "description": "低"
+                                    },
+                                    {
+                                        "const": "middle",
+                                        "description": "中"
+                                    },
+                                    {
+                                        "const": "high",
+                                        "description": "高"
+                                    }
+                                ]
+                            },
+                            "shadow_quality": {
+                                "type": "string",
+                                "description": "阴影质量",
+                                "oneOf": [
+                                    {
+                                        "const": "disabled",
+                                        "description": "关"
+                                    },
+                                    {
+                                        "const": "low",
+                                        "description": "低"
+                                    },
+                                    {
+                                        "const": "middle",
+                                        "description": "中"
+                                    },
+                                    {
+                                        "const": "high",
+                                        "description": "高"
+                                    }
+                                ]
+                            },
+                            "enable_vsync": {
+                                "type": "boolean",
+                                "enum": [
+                                    true,
+                                    false
+                                ],
+                                "description": "启用垂直同步"
+                            },
+                            "render_scale": {
+                                "type": "number",
+                                "description": "渲染精度（仅允许0.6~2.0范围，步长0.2的值）",
+                                "enum": [
+                                    0.6,
+                                    0.8,
+                                    1.0,
+                                    1.2,
+                                    1.4,
+                                    1.6,
+                                    1.8,
+                                    2.0
+                                ],
+                                "maximum": 2.0,
+                                "minimum": 0.6
+                            },
+                            "environ_detail": {
+                                "type": "string",
+                                "description": "场景细节",
+                                "oneOf": [
+                                    {
+                                        "const": "verylow",
+                                        "description": "非常低"
+                                    },
+                                    {
+                                        "const": "low",
+                                        "description": "低"
+                                    },
+                                    {
+                                        "const": "middle",
+                                        "description": "中"
+                                    },
+                                    {
+                                        "const": "high",
+                                        "description": "高"
+                                    },
+                                    {
+                                        "const": "veryhigh",
+                                        "description": "非常高"
+                                    }
+                                ]
+                            },
+                            "light_quality": {
+                                "type": "string",
+                                "description": "光照质量",
+                                "oneOf": [
+                                    {
+                                        "const": "verylow",
+                                        "description": "非常低"
+                                    },
+                                    {
+                                        "const": "low",
+                                        "description": "低"
+                                    },
+                                    {
+                                        "const": "middle",
+                                        "description": "中"
+                                    },
+                                    {
+                                        "const": "high",
+                                        "description": "高"
+                                    },
+                                    {
+                                        "const": "veryhigh",
+                                        "description": "非常高"
+                                    }
+                                ]
+                            },
+                            "bloom_quality": {
+                                "type": "string",
+                                "description": "泛光效果",
+                                "oneOf": [
+                                    {
+                                        "const": "disabled",
+                                        "description": "关"
+                                    },
+                                    {
+                                        "const": "verylow",
+                                        "description": "非常低"
+                                    },
+                                    {
+                                        "const": "low",
+                                        "description": "低"
+                                    },
+                                    {
+                                        "const": "middle",
+                                        "description": "中"
+                                    },
+                                    {
+                                        "const": "high",
+                                        "description": "高"
+                                    },
+                                    {
+                                        "const": "veryhigh",
+                                        "description": "非常高"
+                                    }
+                                ]
+                            },
+                            "reflection_quality": {
+                                "type": "string",
+                                "description": "反射质量",
+                                "enum": [
+                                    {
+                                        "const": "verylow",
+                                        "description": "非常低"
+                                    },
+                                    {
+                                        "const": "low",
+                                        "description": "低"
+                                    },
+                                    {
+                                        "const": "middle",
+                                        "description": "中"
+                                    },
+                                    {
+                                        "const": "high",
+                                        "description": "高"
+                                    },
+                                    {
+                                        "const": "veryhigh",
+                                        "description": "非常高"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "server": {
+                        "type": "string",
+                        "oneOf": [
+                            {
+                                "const": "CN",
+                                "description": "中国"
+                            },
+                            {
+                                "const": "BiliBili",
+                                "description": "哔哩哔哩"
+                            },
+                            {
+                                "const": "Global",
+                                "description": "全球"
+                            },
+                            {
+                                "const": "Proxy",
+                                "description": "代理转发"
+                            }
+                        ]
+                    }
+                },
+                "if": {
+                    "properties": {
+                        "type": {
+                            "const": "Honkai3"
+                        }
+                    }
+                },
+                "then": {
+                    "properties": {
+                        "server": {
+                            "type": "string",
+                            "oneOf": [
+                                {
+                                    "const": "CN",
+                                    "description": "中国"
+                                },
+                                {
+                                    "const": "Global",
+                                    "description": "全球"
+                                },
+                                {
+                                    "const": "Proxy",
+                                    "description": "代理转发"
+                                },
+                                {
+                                    "const": "EA",
+                                    "description": "欧美"
+                                },
+                                {
+                                    "const": "JP",
+                                    "description": "日本"
+                                },
+                                {
+                                    "const": "KR",
+                                    "description": "韩国"
+                                },
+                                {
+                                    "const": "TC",
+                                    "description": "中国特别行政区"
+                                },
+                                {
+                                    "const": "SA",
+                                    "description": "东南亚"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "else": {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "Genshin"
+                            }
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "server": {
+                                "type": "string",
+                                "oneOf": [
+                                    {
+                                        "const": "CN",
+                                        "description": "中国"
+                                    },
+                                    {
+                                        "const": "BiliBili",
+                                        "description": "哔哩哔哩"
+                                    },
+                                    {
+                                        "const": "Global",
+                                        "description": "全球"
+                                    },
+                                    {
+                                        "const": "CN_Cloud",
+                                        "description": "中国 云游戏"
+                                    },
+                                    {
+                                        "const": "Proxy",
+                                        "description": "代理转发"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "global": {
+            "type": "object",
+            "description": "游戏全局设置",
+            "properties": {
+                "graphics_config": {
+                    "default_config": {
+                        "type": "string",
+                        "description": "显示预设（当值为 \"custom\" 时，本地显示设置生效）",
+                        "oneOf": [
+                            {
+                                "const": "custom",
+                                "description": "自定义"
+                            },
+                            {
+                                "const": "verylow",
+                                "description": "非常低"
+                            },
+                            {
+                                "const": "low",
+                                "description": "低"
+                            },
+                            {
+                                "const": "middle",
+                                "description": "中"
+                            },
+                            {
+                                "const": "high",
+                                "description": "高"
+                            },
+                            {
+                                "const": "veryhigh",
+                                "description": "非常高"
+                            }
+                        ]
+                    },
+                    "platform": {
+                        "type": "string",
+                        "description": "平台设置",
+                        "oneOf": [
+                            {
+                                "const": "pc",
+                                "description": "PC 端模式，不支持触摸屏"
+                            },
+                            {
+                                "const": "mobile",
+                                "description": "移动端模式，支持触摸屏"
+                            },
+                            {
+                                "const": "webtouch",
+                                "description": "网页端触摸模式，支持触摸屏"
+                            }
+                        ]
+                    },
+                    "fps": {
+                        "type": "string",
+                        "enum": [
+                            "30",
+                            "60",
+                            "120"
+                        ]
+                    },
+                    "anti_aliasing": {
+                        "type": "string",
+                        "description": "抗锯齿",
+                        "oneOf": [
+                            {
+                                "const": "taa",
+                                "description": "TAA 抗锯齿"
+                            },
+                            {
+                                "const": "fxaa",
+                                "description": "FXAA 抗锯齿"
+                            },
+                            {
+                                "const": "disabled",
+                                "description": "关闭抗锯齿"
+                            }
+                        ]
+                    },
+                    "character_quality": {
+                        "type": "string",
+                        "description": "角色质量",
+                        "oneOf": [
+                            {
+                                "const": "low",
+                                "description": "低"
+                            },
+                            {
+                                "const": "middle",
+                                "description": "中"
+                            },
+                            {
+                                "const": "high",
+                                "description": "高"
+                            }
+                        ]
+                    },
+                    "shadow_quality": {
+                        "type": "string",
+                        "description": "阴影质量",
+                        "oneOf": [
+                            {
+                                "const": "disabled",
+                                "description": "关"
+                            },
+                            {
+                                "const": "low",
+                                "description": "低"
+                            },
+                            {
+                                "const": "middle",
+                                "description": "中"
+                            },
+                            {
+                                "const": "high",
+                                "description": "高"
+                            }
+                        ]
+                    },
+                    "enable_vsync": {
+                        "type": "boolean",
+                        "enum": [
+                            true,
+                            false
+                        ],
+                        "description": "启用垂直同步"
+                    },
+                    "render_scale": {
+                        "type": "number",
+                        "description": "渲染精度（仅允许0.6~2.0范围，步长0.2的值）",
+                        "enum": [
+                            0.6,
+                            0.8,
+                            1.0,
+                            1.2,
+                            1.4,
+                            1.6,
+                            1.8,
+                            2.0
+                        ],
+                        "maximum": 2.0,
+                        "minimum": 0.6
+                    },
+                    "environ_detail": {
+                        "type": "string",
+                        "description": "场景细节",
+                        "oneOf": [
+                            {
+                                "const": "verylow",
+                                "description": "非常低"
+                            },
+                            {
+                                "const": "low",
+                                "description": "低"
+                            },
+                            {
+                                "const": "middle",
+                                "description": "中"
+                            },
+                            {
+                                "const": "high",
+                                "description": "高"
+                            },
+                            {
+                                "const": "veryhigh",
+                                "description": "非常高"
+                            }
+                        ]
+                    },
+                    "light_quality": {
+                        "type": "string",
+                        "description": "光照质量",
+                        "oneOf": [
+                            {
+                                "const": "verylow",
+                                "description": "非常低"
+                            },
+                            {
+                                "const": "low",
+                                "description": "低"
+                            },
+                            {
+                                "const": "middle",
+                                "description": "中"
+                            },
+                            {
+                                "const": "high",
+                                "description": "高"
+                            },
+                            {
+                                "const": "veryhigh",
+                                "description": "非常高"
+                            }
+                        ]
+                    },
+                    "bloom_quality": {
+                        "type": "string",
+                        "description": "泛光效果",
+                        "oneOf": [
+                            {
+                                "const": "disabled",
+                                "description": "关"
+                            },
+                            {
+                                "const": "verylow",
+                                "description": "非常低"
+                            },
+                            {
+                                "const": "low",
+                                "description": "低"
+                            },
+                            {
+                                "const": "middle",
+                                "description": "中"
+                            },
+                            {
+                                "const": "high",
+                                "description": "高"
+                            },
+                            {
+                                "const": "veryhigh",
+                                "description": "非常高"
+                            }
+                        ]
+                    },
+                    "reflection_quality": {
+                        "type": "string",
+                        "description": "反射质量",
+                        "enum": [
+                            {
+                                "const": "verylow",
+                                "description": "非常低"
+                            },
+                            {
+                                "const": "low",
+                                "description": "低"
+                            },
+                            {
+                                "const": "middle",
+                                "description": "中"
+                            },
+                            {
+                                "const": "high",
+                                "description": "高"
+                            },
+                            {
+                                "const": "veryhigh",
+                                "description": "非常高"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}
